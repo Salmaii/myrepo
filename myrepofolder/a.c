@@ -1,5 +1,5 @@
 /*
-Para fazer novos commits:
+-->Para fazer novos commits:
 
 ->terminar o trabalho 
 ->ir no source control 
@@ -12,7 +12,7 @@ Para fazer novos commits:
 //-----------------------------
 
 /*
-Para receber mudanças em outro local:
+-->Para receber mudanças em outro local:
 
 ->ir no source control
 ->fazer o pull request
@@ -22,15 +22,13 @@ Para receber mudanças em outro local:
 
 /*
 
-Para fazer o primeiro commit
+-->Para fazer o primeiro commit
 
 ->criar repositórios etc...
 ->adicionar ele a uma pasta do computador local
 ->vincular ela com command+shift+p 
 ->git clone 
 ->colar a url 
-
-
 
 ->
 
