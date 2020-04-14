@@ -3,7 +3,7 @@
 #include <string.h>
 
 //printa + nas posiçoes 0 do array e print # nas posiçoes != de 0
-int printmap(int lin, int col){
+void printmap(int lin, int col){
     int map[9][9], i, j;
 
     map[lin][col] = 1;
@@ -20,11 +20,11 @@ int printmap(int lin, int col){
         }
         printf("\n");
     }
-    return(0);
 }
 
 int main (){
     int lin, col;
+    int map[9][9];
 
     printf("Digite a linha:\n -");
     scanf("%i", &lin);
@@ -32,7 +32,7 @@ int main (){
     printf("Digite a coluna:\n -");
     scanf("%i", &col);
 
-    printmap(lin, col);
+    printmap(lin, col, map[][]);
 
     return 0;
 }
