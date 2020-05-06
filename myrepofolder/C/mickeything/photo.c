@@ -21,6 +21,8 @@ int main(int argc, char const *argv[]){
    printf("%c", fgetc(arquivo));
    }
    
+   getchar();
+   
    fclose(arquivo);
    return 0;
 }
