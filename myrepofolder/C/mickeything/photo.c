@@ -3,30 +3,33 @@
 
 int main(int argc, char const *argv[]){
 
-   char nome[10];
-   
-   printf("\n-----------------------------------------------------------------------------------------------------\n");
+   char name[25];
+   char caminho[12] = ".\\photos\\"; 
 
-   printf("\t\t\t\tUse este site para converter o arquivo\n");
-   printf("\t\t\t>>> https://www.text-image.com/convert/ascii.html <<<\n");
-   printf("\n\tColoque o arquivo de foto convertido para .txt na pasta photos e salve como arq\n\n");
+   printf("\n+-------------------------------------------------------------------------------------------------------+");
+   printf("\n|1-\t\t\t\tUse este site para converter o arquivo\t\t\t\t\t|");
+   printf("\n|2-\t\t\t>>> https://www.text-image.com/convert/ascii.html <<<\t\t\t\t|");
+   printf("\n|3-\t\t    Coloque o arquivo de foto convertido para .txt na pasta photos\t\t\t|");
+   printf("\n+-------------------------------------------------------------------------------------------------------+");
 
-   printf("\t\t\t\t\tApos isso clique ENTER\n");
+   printf("\n\nDigite o nome do arquivo e clique ENTER para printar:\n-");
+   scanf("%s", name);
+
+   strcat(caminho, name) && strcat(caminho, ".txt");
+
    getchar();
 
    FILE* arquivo;
-   arquivo = fopen(".\\photos\\arq.txt","r");
+  // arquivo = fopen(".\\photos\\arq.txt","r");
+  arquivo = fopen(caminho,"r");
 
    while (!feof(arquivo)){
    printf("%c", fgetc(arquivo));
    }
    
    getchar();
-   
+
    fclose(arquivo);
+   
    return 0;
 }
-
-//usar funçoes de fopen para criar o arquivo de texto 
-//pedir para pessoa colar o resultado do site dentro do bloco de texto
-
