@@ -6,7 +6,7 @@ int main(int argc, char const *argv[]){
    char nome[10];
    
    printf("\n-----------------------------------------------------------------------------------------------------");
-   printf("\n\t\t\t OBS: Coloque o arquivo na pasta photos e salve como arq\n");
+   printf("\n\tOBS: Coloque o arquivo de foto convertido para .txt na pasta photos e salve como arq\n");
    printf("\t\t\t\t\tApos isso clique ENTER\n");
    getchar();
 
