@@ -1,6 +1,6 @@
 /*
 
-Construa um programa que insira números em uma lista ligada.
+Construa um programa que insira números em uma lista duplamente ligada.
 O usuário poderá escolher se deseja incluir o número no ínício da lista ou no final da lista;
 
 */
@@ -29,14 +29,10 @@ void incluir_na_lista(lista *l, int x);
 void mostrar_lista(lista *l);
 
 int main(){
-   int opcao, numero;
+    int opcao, numero;
 
     lista *lista_teste;
     lista_teste = aloca_lista();
-
-    printf("\nDigite o numero: ");
-    scanf("%i", &numero);
-    incluir_no_final(lista_teste, numero);
 
     while(opcao!=0){
        printf("\n\tEscolha uma opcao:\n(1) Para colocar o numero no início\n(2) Para incluir o numero no final\n(x) Para fechar e mostrar a lista\n->");
@@ -112,6 +108,7 @@ void incluir_na_lista(lista *l, int x){
     if (l->inicio == NULL)
     {
         l->inicio = novo;
+        l->fim = novo;
     }
     else
     {
@@ -137,7 +134,7 @@ void mostrar_lista(lista *l){
         aux = l->inicio;
         while (aux != NULL)
         {
-            printf("\n%d", aux->valor);
+            printf("\n->%d", aux->valor);
             aux = aux->prox;
         }
     }
