@@ -26,32 +26,26 @@ registro *aloca_registro();
 lista *aloca_lista();
 void incluir_na_lista(lista *l, int x);
 void mostrar(lista *l);
-void sort(lista *l);
+void remove_na_lista(lista *l, int x);
 
-int main(){
+int main()
+{
     lista *lista_1;
     int numero = 0;
-    int i;
 
     lista_1 = aloca_lista();
 
     printf("\n Digite os numeros para ser includo na lista, quando quiser parar digite (-1):\n");
-
     while(numero!=-1){
     printf("-> ");
     scanf("%d", &numero);
     incluir_na_lista(lista_1, numero);
     }
 
-    //sort(lista_1);
-    
-    printf("\n Lista ordenada:");
-    mostrar(lista_1);
-    
-return 0;
 }
 
-lista *aloca_lista(){
+lista *aloca_lista()
+{
     lista *nova_lista;
 
     nova_lista = (lista *)malloc(sizeof(lista));
@@ -60,7 +54,8 @@ lista *aloca_lista(){
     return nova_lista;
 }
 
-registro *aloca_registro(){
+registro *aloca_registro()
+{
     registro *novo_registro;
     novo_registro = (registro *)malloc(sizeof(registro));
     novo_registro->valor = 0;
@@ -68,9 +63,9 @@ registro *aloca_registro(){
     return novo_registro;
 }
 
-void incluir_na_lista(lista *l, int x){
+void incluir_na_lista(lista *l, int x)
+{
     registro *novo, *aux;
-    int temp;
     novo = aloca_registro();
     novo->valor = x;
 
@@ -87,28 +82,15 @@ void incluir_na_lista(lista *l, int x){
             aux = aux->prox;
         }
 
-        if(l->qtd > 1){
-            if(novo>aux){
-                aux->prox->valor = novo;
-            }
-            else{
-                temp = l->inicio->valor;
-                l->inicio->valor = novo;
-                aux->prox->valor = temp;
-            }
-        }
-        
         aux->prox = novo;
     }
 
     l->qtd++;
 }
 
-void mostrar(lista *l){
+void mostrar(lista *l)
+{
     registro *aux;
-    int i;
-
-    printf("\n---START---");
 
     if (l->qtd == 0)
     {
@@ -119,29 +101,49 @@ void mostrar(lista *l){
         aux = l->inicio;
         while (aux != NULL)
         {
-            printf("\n-> %d", aux->valor);
+            printf("\n%d", aux->valor);
             aux = aux->prox;
         }
     }
-    printf("\n---END---\n");
 }
 
-/*
-void sort(lista *l){
-    registro *aux, *temp;
-    int i;
+void remove_na_lista(lista *l, int x)
+{
 
-    aux = l->inicio->prox;
+    registro *aux, *ant;
 
-    for(i=0;i<l->qtd;i++){
-        while(aux->prox!=NULL){
-            if(l->inicio->valor>aux->valor){
-                temp->valor = l->inicio->valor;
-                l->inicio->valor = aux->valor;
-                aux->valor = temp->valor;
-                aux = aux->prox;
+    if (l->inicio == NULL)
+    {
+        printf("\n lista vazia");
+        return;
+    }
+    aux = l->inicio;
+
+    while (aux != NULL)
+    {
+        if (aux->valor == x)
+        {
+            if (ant == NULL)
+            {
+                l->inicio = aux->prox;
             }
+            else
+            {
+                ant->prox = aux->prox;
+            }
+
+            free(aux);
+            l->qtd--;
+            printf("\n Removido com sucesso");
+            return;
+        }
+        else
+        {
+            ant = aux;
+            aux = aux->prox;
         }
     }
+    printf("\n Elemento nao foi encontrado na lista");
+
+    return;
 }
-*/
