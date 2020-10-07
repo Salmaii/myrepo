@@ -1,9 +1,9 @@
 /*
-
-Construa um programa que insira números em uma lista ligada.
-O usuário poderá escolher se deseja incluir o número no ínício da lista ou no final da lista;
-
-------------------------------Gabriel salmai 1922130017-----------------------------------                       
+faça um programa que receba N números do usuário até o que usuário digite o número -1. Armazene os números  em 2 listas ligadas conforme as regras a seguir:
+a) se o número for primo, colocar na lista 1
+b) se o número for par, colocar na lista 2
+c)se o numero for impar > 100 e < 1000, colocar na lista 2;
+Após a finalização das inserções, monte uma terceira lista com os 5 primeiros números da primeira lista e os 5 últimos da segunda lista;
 */
 
 #include <stdio.h>
@@ -28,29 +28,42 @@ void incluir_no_final(lista *l, int x);
 void mostrar(lista *l);
 
 int main(){   
-   int numero, opcao;
+   int numero=0, i, resultado;
 
    lista *lista_1;
    lista_1 = aloca_lista();
 
-   while(opcao!=0){
-      printf("\n\tEscolha uma opcao:\n(1) Para colocar o numero no início\n(2) Para incluir o numero no final\n(x) Para fechar e mostrar a lista\n->");
-      scanf("%i", &opcao);
-      if(opcao==1){           
-         printf("\nDigite o numero: ");
-         scanf("%i", &numero);
+   lista *lista_2;
+   lista_2 = aloca_lista();
+
+   lista *lista_3;
+   lista_3 = aloca_lista();
+
+   while (numero!=-1)
+   {
+      printf("Lista 1:");
+      mostrar(lista_1);
+      printf("Lista 2:");
+      mostrar(lista_2);
+      printf("\nDigite um numero para ser incluido na lista: \n -");
+      scanf("%i", &numero);
+
+      for(i=2;i<=numero/2;i++){
+         if(numero%i==0){
+            resultado = resultado+1;
+         }
+      }
+      
+      if(resultado == 0){
          incluir_na_lista(lista_1, numero);
       }
-      else if (opcao==2){
-         printf("\nDigite o numero: ");
-         scanf("%i", &numero);
-         incluir_no_final(lista_1, numero);
+      else if(numero % 2 == 0){
+         incluir_na_lista(lista_2, numero);
       }
-      else
-      {
-         mostrar(lista_1);
-         opcao = 0;
-      }   
+      else if (numero % 2 != 0 && numero > 100 && numero < 1000){
+         incluir_na_lista(lista_2, numero);
+      }
+
    }
 
    return 0;
@@ -124,8 +137,6 @@ void mostrar(lista *l)
 {
    registro *aux;
 
-   printf("\n---START---");
-
    if (l->qtd == 0)
    {
       printf("\n Lista vazia");
@@ -139,5 +150,5 @@ void mostrar(lista *l)
          aux = aux->prox;
       }
    }
-   printf("\n---END---\n");
+   printf("\n---END---\n\n");
 }
