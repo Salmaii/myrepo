@@ -1,2 +1,13 @@
+<<<<<<< HEAD
 node_modules
 package-lock.json
+=======
+*.json
+*.exe
+*.out
+*.app
+*.i*86
+*.x86_64
+*.hex
+*.vscode
+>>>>>>> 974075620021d2a976310573eca72dda6e77db88
