@@ -13,31 +13,25 @@ Em cada ponto você só poderá ler o próximo caractere da string.
 #include <stdlib.h>
 #include <string.h>
 
-int main(int argc, char const *argv[])
-{
-    int i, j, num;
-    char palavra[num], inv[num];
+int main(int argc, char const *argv[]){
 
-    printf("Digite a palavra: ");
-    scanf("%s", palavra);
-    num = strlen(palavra);
-    j = num;
+    char x[30], y[30];
+    int tam, i;
 
-    printf("\nPalavra: \n\t-> ");
-    for(i=0;i<num;i++){
-        printf("%c", palavra[i]);
+    printf("\nDigite a palavra: ");
+    scanf("%s",x);
+    tam = strlen(x);
+
+    for(i=0;i<tam;i++){
+        y[i]=x[tam-i-1];
     }
 
-    for(i=0;i>num;i++){
-        inv[i] = palavra[j - 1];
-        j = j - 1;
+    for(i=0;i<tam/2;i++){
+        if(x[i] != y[i]){
+            printf("\n(X) A palavra nao segue a forma xCy\n");
+            return 1;
+        }
+        printf("\n(OK) A palavra segue a forma xCy\n");
     }
-
-    printf("\n\nInvertida: \n\t<- ");
-    for(i=0;i<num;i++){
-        printf("%c", inv[i]);
-    }
-
-    printf("\n");
     return 0;
 }
