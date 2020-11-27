@@ -3,104 +3,186 @@
 
 typedef struct fila
 {
-   int pri, ult, qtd, tam, *dados;
-}fila;
+    int qtd;
+    struct registro *pri;
+    struct registro *ult;
+} fila;
 
-void criarfila(fila *f, int x);
-void inserir(fila *f, int x);
-void mostrar(fila *f);
-
-int chamar(fila *f);
-int vazia(fila *f);
-int cheia(fila *f);
-
-void selection_sort (int * vet,int tam);
-
-int main()
+typedef struct registro
 {
-   int opcao, tam, valor=0, i;
-   fila *fila1;
+    int valor;
+    struct registro *prox;
+} registro;
 
+
+registro *aloca_registro();
+fila *aloca_fila();
+
+void mostrar(fila *f);
+void incluir_na_fila(fila *f, int x);
+void chamar_na_fila(fila *f);
+
+void selection_sort (int * vet, int tam);
+
+int main(int argc, char const *argv[]){
+
+   int opcao, valor, tam, i, j;
+
+   fila *fila1;
+   fila1 = aloca_fila();
+  
    printf("\nDigite o tamanho da fila: ");
    scanf("%d", &tam);
-   criarfila(fila1, tam);
 
-   for(i=0;i<tam;i++){
-   printf("Digite a altura do %i soldado: ", i + 1);
-   scanf("%i", &valor);
-   inserir(fila1, valor);
-   }
+    int vet[tam];
+    int vet2[tam];
 
-   selection_sort(fila1, tam);
-   
-   mostrar(fila1);
 
+    for(i=0;i<tam;i++){
+      printf("Digite o tamanho do %i soldado: ", i + 1);
+      scanf("%i", &valor);
+      vet[i] = valor;
+      vet2[i] = valor;
+    }
+
+   selection_sort(vet, tam);
+
+    for(i=0;i<tam;i++){
+        for(j=0;j<tam;j++){
+            if(i!=j){
+                if(vet[i] - vet[j] == 0){
+                    printf("%i\t", i + 1);
+                }
+                else if(vet[i] - vet[j] > 0)
+                {
+                    printf("%i\t", i + 1);
+                }
+                
+            }
+        }   
+    }
+
+
+   // mostrar(fila1);
+
+
+
+
+
+
+
+
+
+/*
+
+    do{
+        mostrar(fila1);
+
+        printf("\n(1) Incluir na fila \n(2) Chamar alguem \n(3) Sair");
+        printf("\nEscolha uma opcao: ");
+        scanf("%d", &opcao);
+
+        switch (opcao){
+        case 1:
+            printf("\nDigite o valor: ");
+            scanf("%d", &valor);
+            incluir_na_fila(fila1, valor);
+            printf("\n");
+            break;
+        case 2:
+            chamar_na_fila(fila1);
+            break;
+        case 3:
+            break;
+        default:
+            printf("\nOpcao Invalida\n");
+            break;
+        }
+
+    }while(opcao != 3);
     
-   return 0;
+*/
+
+
+
+    return 0;
 }
 
-void criarfila(fila *f, int x)
+
+fila *aloca_fila()
 {
-    f->tam = x; 
-    f->dados = (int *)malloc(sizeof(int) * f->tam);
-    f->pri = 0;
-    f->ult = -1;
-    f->qtd = 0;
+    fila *novo;
+    novo = (fila *)malloc(sizeof(fila));
+    novo->qtd = 0;
+    novo->pri = NULL;
+    novo->ult = NULL;
+    return novo;
 }
 
-void inserir(fila *f, int x)
+registro *aloca_registro()
 {
-    if (f->ult == f->tam - 1)
+    registro *novo;
+    novo = (registro *)malloc(sizeof(registro));
+    novo->valor = 0;
+    novo->prox = NULL;
+    return novo;
+}
+
+void incluir_na_fila(fila *f, int x)
+{
+    registro *novo;
+    novo = aloca_registro();
+    novo->valor = x;
+
+    if (f->pri == NULL && f->ult == NULL)
     {
-        f->ult = -1;
+        f->pri = novo;
+        f->ult = novo;
     }
-
-    f->ult++;
-    f->dados[f->ult] = x;
+    else
+    {
+        f->ult->prox = novo;
+        f->ult = novo;
+    }
     f->qtd++;
-}
-
-int chamar(fila *f)
-{
-    int temp;
-    temp = f->dados[f->pri++];
-
-    if (f->pri == f->tam)
-    {
-        f->pri = 0;
-    }
-
-    f->qtd--;
-    return temp;
-}
-
-
-int vazia(fila *f)
-{
-    return (f->qtd == 0);
-}
-
-int cheia(fila *f)
-{
-    return (f->qtd == f->tam);
 }
 
 void mostrar(fila *f)
 {
-    int i=0, j;
-    for(i, j=f->pri;i<f->qtd;i++)
+    registro *aux;
+    if (f->pri == NULL)
     {
-        printf(" <- %d ", f->dados[i++]);
-        
-        if (i == f->tam)
+        printf("\nFila Vazia");
+    }
+    else
+    {
+        aux = f->pri;
+        while (aux != NULL)
         {
-            i = 0;
+            printf("<-  %d  ", aux->valor);
+            aux = aux->prox;
         }
     }
 }
 
+void chamar_na_fila(fila *f)
+{
+    registro *aux;
+    int x;
+
+    if(f->pri != NULL){
+        aux = f->pri;
+        x = aux->valor;
+        f->pri = aux->prox;
+        free(aux);
+        f->qtd--;
+        printf("\n%d Chamado com Sucesso\n\n",x);
+    }
+    return;
+}
+
 void selection_sort (int * vet, int tam){
-long int i, j, aux1, aux;
+int i, j, aux1, aux;
 
 for (i = 0; i < (tam - 1); i++){
   aux1 = i;
@@ -115,62 +197,3 @@ for (i = 0; i < (tam - 1); i++){
     vet[aux1] = aux;
   }
 }}
-
-/*
-
-    do 
-    {
-        printf("FILA");
-        if (vazia(fila1))
-        {
-            printf("\nVAZIA\n");
-        }
-        else
-        {
-            printf("\n ");
-            mostrar(fila1);
-        }
-        printf("\n(1) Incluir na fila \n(2) Chamar alguem \n(3) Sair");
-        printf("\nEscolha uma opcao: ");
-        scanf("%d", &opcao);
-
-        switch (opcao)
-        {
-        case 1:
-            if (cheia(fila1))
-            {
-
-                printf("\nCHEIA!\n");
-            }
-            else
-            {
-
-                printf("\nDigite um valor:");
-                scanf("%d", &valor);
-                inserir(fila1, valor);
-            }
-
-            break;
-
-        case 2: 
-            if (vazia(fila1))
-            {
-
-                printf("\nVAZIA\n\n");
-            }
-            else
-            {
-
-                valor = chamar(fila1);
-                printf("\n%d chamado com sucesso\n", valor);
-            }
-            break;
-        case 3:
-            printf("Saindo!\n");
-            break;
-        default:
-            printf("\nOpcao Invalida!\n");
-        }
-    } while (opcao != 3);
-
-    */
