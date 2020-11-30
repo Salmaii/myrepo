@@ -6,81 +6,61 @@ C. FILA
 #include <stdio.h>
 #include <stdlib.h>
 
-void ordenacao(int *vetor, int tam);
-void mostra_vetor(int *vetor, int tam);
-int decepcionados(int *vetor, int tam);
+int soma(int *vet, int tam);
+void selection_sort (int *vet, int tam);
 
-int main(void) 
+
+int main(int argc, char const *argv[])
 {
-    int i, p, *t, aux;
+    int i, tam, *tempo, resultado;
 
-    scanf("%d", &p);
-    t = (int *)malloc(sizeof(int)*p);
+    printf("Digite o numero de pessoas na fila: \n");
+    scanf("%d", &tam);
 
-    for(i=0; i<p; i++)
-    {
-        scanf("%d", &t[i]);
+    tempo = (int *)malloc(sizeof(int)*tam);
+
+    for(i=0; i<tam; i++){
+        printf("Tempo de espera da %i pessoa: ", i+1);
+        scanf("%d", &tempo[i]);
     }
 
-    ordenacao(t, p);
-    
-    // printf("\n");
-    // mostra_vetor(t, p);
-    // printf("\n");
-    
-    aux = decepcionados(t, p);
+    selection_sort(tempo, tam);
+    resultado = soma(tempo, tam);
 
-    printf("%d\n", aux);
+    printf("\n%d\n", resultado);
 
     return 0;
 }
 
-void mostra_vetor(int *vetor, int tam)
-{
-    int i;
+int soma(int *vet, int tam){
+    int i, j, res=0, soma;
 
-    for(i=0; i<tam; i++)
-    {
-        printf("%d ", vetor[i]);
-    }
-
-    printf("\n");
-}
-
-void ordenacao(int *vetor, int tam)
-{
-    int i=0, j=0, aux=0;
-
-    for(i=0; i<tam; i++)
-    {
-        for(j=i+1; j<tam; j++)
-        {
-            if(vetor[i]>vetor[j])
-            {
-                aux = vetor[i];
-                vetor[i] = vetor[j];
-                vetor[j] = aux;
-            }
-        }
-    }
-}
-
-int decepcionados(int *vetor, int tam)
-{
-    int i=0, j=0, aux=0, soma=0;
-
-    for(i=0; i<tam; i++)
-    {
+    for(i=0; i<tam; i++){
         soma=0;
-        for(j=0; j<i; j++)
-        {
-            soma += vetor[j];
+        for(j=0; j<i; j++){
+            soma = vet[j] + soma;
         }
-        if(soma<=vetor[i])
-        {
-            aux += 1;
+        if(soma<=vet[i]){
+            res = 1 + res;
         }
     }
 
-    return aux;
+    return res;
+}
+
+void selection_sort (int *vet, int tam){
+   int i, j, aux1, aux;
+   for (i=0; i<(tam-1); i++){
+      aux1 = i;
+      for(j = i+1; j<tam; j++){
+         if (vet[j] < vet[aux1]){
+         aux1 = j;
+         }
+      }
+      if(i != aux1){
+         aux = vet[i];
+         vet[i] = vet[aux1];
+         vet[aux1] = aux;
+      }
+   }
 }

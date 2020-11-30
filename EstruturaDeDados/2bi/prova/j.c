@@ -1,98 +1,111 @@
 /*
-J.LISTA DE CONVIDADOS
--------------------------------------Gabriel Salmai - 1922130017---------------------------------------------------
+
+Construa um programa que insira números em uma lista ligada.
+O usuário poderá escolher se deseja incluir o número no ínício da lista ou no final da lista;
+
+------------------------------Gabriel salmai 1922130017-----------------------------------                       
 */
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-#include <time.h>
 
-#define NO 0
-#define YES 1
-
-typedef struct Nomes{
-        char nome[200];
-        struct No* prox;
-}Nomes;
-
-int verificaNome(Nomes* lista,char nomeProvisorio[]);
-Nomes* inserirNome(Nomes* lista,char nomeProvisorio[]);
-void mostrarRespostas(Nomes* lista);
-Nomes* inserirRespostas(Nomes* lista,int logico);
-
-int main()
+typedef struct lista
 {
-    int numeroNomes = 0,i;
-    Nomes* listaNomes = NULL;
-    Nomes* listaRespostas = NULL;
+   int qtd;
+   struct registro *inicio;
+} lista;
 
-    printf("Insira quantidade de convidados:");
-    scanf(" %d",&numeroNomes);
+typedef struct registro
+{
+   char nome[50];
+   struct registro *prox;
+} registro;
 
-    char nomeProvisorio[200];
+registro *aloca_registro();
+lista *aloca_lista();
+void incluir_na_lista(lista *l, char nome, int tam);
+void incluir_no_final(lista *l, int x);
+void mostrar(lista *l);
 
-    for (i = 0; i < numeroNomes; i++)
+int main(){   
+   int numero, opcao, tam;
+   char nome[50];
+
+   lista *lista_1;
+   lista_1 = aloca_lista();
+
+    printf("\nDigite o nome: ");
+    scanf("%s", nome);
+    tam = strlen(nome);
+    incluir_na_lista(lista_1, nome, tam);
+
+    mostrar(lista_1);
+      
+
+
+   return 0;
+}
+
+lista *aloca_lista()
+{
+    lista *nova_lista;
+
+    nova_lista = (lista *)malloc(sizeof(lista));
+    nova_lista->qtd = 0;
+    nova_lista->inicio = NULL;
+    return nova_lista;
+}
+
+registro *aloca_registro()
+{
+    registro *novo_registro;
+    novo_registro = (registro *)malloc(sizeof(registro));
+    //novo_registro->nome = 0;
+    novo_registro->prox = NULL;
+    return novo_registro;
+}
+
+void incluir_na_lista(lista *l, char nome, int tam){
+    registro *novo, *aux;
+    int i, aux1;
+    aux = aux + i;
+    novo = aloca_registro();
+    for(i=aux1;i>tam;i++){
+        novo->nome[i] = nome;
+    }
+
+    if (l->inicio == NULL)
     {
-        scanf(" %[^\n]s", nomeProvisorio);
-        if(!verificaNome(listaNomes, nomeProvisorio)){
-            listaNomes = inserirNome(listaNomes, nomeProvisorio);
-            listaRespostas = inserirRespostas(listaRespostas,NO);
-
-        }
-        else{
-            listaRespostas = inserirRespostas(listaRespostas,YES);
-        }
+        l->inicio = novo;
     }
-    mostrarRespostas(listaRespostas);
+    else
+    {
+        aux = l->inicio;
+        novo->prox = l->inicio;
+        l->inicio = novo;
+    }
 
-    return 0;
+    l->qtd++;
 }
 
-void mostrarRespostas(Nomes* lista){
-    while(lista){
-        printf("%s\n",lista->nome);
-        lista = lista->prox;
-    }
-}
+void mostrar(lista *l)
+{
+   registro *aux;
 
-Nomes* inserirRespostas(Nomes* lista,int logico){
-    Nomes* novo = malloc(sizeof(Nomes));
-    novo->prox = NULL;
-    if(logico){
-        strcpy(novo->nome, "NO");
-    }
-    else{
-        strcpy(novo->nome, "YES");
-    }
+   printf("\n---START---");
 
-    if(lista){
-        novo->prox = lista;
-    }
-
-    return novo;
-}
-
-Nomes* inserirNome(Nomes* lista,char nomeProvisorio[]){
-    Nomes* novo = malloc(sizeof(Nomes));
-    strcpy(novo->nome, nomeProvisorio);
-    novo->prox = NULL;
-
-    if(lista){
-        novo->prox = lista;
-    }
-    return novo;
-}
-
-int verificaNome(Nomes* inicioLista,char nomeProvisorio[]){
-    int logica= 0;
-    Nomes* aux = malloc(sizeof(Nomes));
-    aux = inicioLista;
-    while(aux){
-        if(strcmp(aux->nome, nomeProvisorio) == 0){
-            logica = 1;
-            }
-        aux = aux->prox;
-    }
-    return logica;
+   if (l->qtd == 0)
+   {
+      printf("\n Lista vazia");
+   }
+   else
+   {
+      aux = l->inicio;
+      while (aux != NULL)
+      {
+         printf("\n->%s", aux->nome);
+         aux = aux->prox;
+      }
+   }
+   printf("\n---END---\n");
 }
