@@ -1,186 +1,86 @@
+/*
+C. FILA
+-------------------------------------Gabriel Salmai - 1922130017---------------------------------------------------
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct fila
+void ordenacao(int *vetor, int tam);
+void mostra_vetor(int *vetor, int tam);
+int decepcionados(int *vetor, int tam);
+
+int main(void) 
 {
-    int qtd;
-    struct registro *pri;
-    struct registro *ult;
-} fila;
+    int i, p, *t, aux;
 
-typedef struct registro
-{
-    int valor;
-    struct registro *prox;
-} registro;
+    scanf("%d", &p);
+    t = (int *)malloc(sizeof(int)*p);
 
+    for(i=0; i<p; i++)
+    {
+        scanf("%d", &t[i]);
+    }
 
-registro *aloca_registro();
-fila *aloca_fila();
-
-void mostrar(fila *f);
-void incluir_na_fila(fila *f, int x);
-void chamar_na_fila(fila *f);
-
-void selection_sort (int * vet, int tam);
-
-int main(int argc, char const *argv[]){
-
-   int opcao, valor, tam, vet[4], i, var, tam2, tempo = 0;
-
-   fila *fila1;
-   fila1 = aloca_fila();
-  
-   printf("\nDigite o tamanho da fila: ");
-   scanf("%d", &tam);
-
-   for(i=0;i<tam;i++){
-      printf("Digite o tempo de espera da %i pessoa: ", i + 1);
-      scanf("%i", &valor);
-      vet[i] = valor;
-   }
-
-   selection_sort(vet, tam);
-
-   for(i=0;i<tam;i++){
-      
-      if(vet[i] < tempo){
-         printf("\tTempo: %imin ", tempo);
-         printf("\t%i", i +1);
-      }
-      tempo = vet[i] + tempo;
-
-   }
-
-
-
-
-
-
-
-
-
-/*
-
-    do{
-        mostrar(fila1);
-
-        printf("\n(1) Incluir na fila \n(2) Chamar alguem \n(3) Sair");
-        printf("\nEscolha uma opcao: ");
-        scanf("%d", &opcao);
-
-        switch (opcao){
-        case 1:
-            printf("\nDigite o valor: ");
-            scanf("%d", &valor);
-            incluir_na_fila(fila1, valor);
-            printf("\n");
-            break;
-        case 2:
-            chamar_na_fila(fila1);
-            break;
-        case 3:
-            break;
-        default:
-            printf("\nOpcao Invalida\n");
-            break;
-        }
-
-    }while(opcao != 3);
+    ordenacao(t, p);
     
-*/
+    // printf("\n");
+    // mostra_vetor(t, p);
+    // printf("\n");
+    
+    aux = decepcionados(t, p);
 
-
+    printf("%d\n", aux);
 
     return 0;
 }
 
-
-fila *aloca_fila()
+void mostra_vetor(int *vetor, int tam)
 {
-    fila *novo;
-    novo = (fila *)malloc(sizeof(fila));
-    novo->qtd = 0;
-    novo->pri = NULL;
-    novo->ult = NULL;
-    return novo;
+    int i;
+
+    for(i=0; i<tam; i++)
+    {
+        printf("%d ", vetor[i]);
+    }
+
+    printf("\n");
 }
 
-registro *aloca_registro()
+void ordenacao(int *vetor, int tam)
 {
-    registro *novo;
-    novo = (registro *)malloc(sizeof(registro));
-    novo->valor = 0;
-    novo->prox = NULL;
-    return novo;
-}
+    int i=0, j=0, aux=0;
 
-void incluir_na_fila(fila *f, int x)
-{
-    registro *novo;
-    novo = aloca_registro();
-    novo->valor = x;
-
-    if (f->pri == NULL && f->ult == NULL)
+    for(i=0; i<tam; i++)
     {
-        f->pri = novo;
-        f->ult = novo;
-    }
-    else
-    {
-        f->ult->prox = novo;
-        f->ult = novo;
-    }
-    f->qtd++;
-}
-
-void mostrar(fila *f)
-{
-    registro *aux;
-    if (f->pri == NULL)
-    {
-        printf("\nFila Vazia");
-    }
-    else
-    {
-        aux = f->pri;
-        while (aux != NULL)
+        for(j=i+1; j<tam; j++)
         {
-            printf("<-  %d  ", aux->valor);
-            aux = aux->prox;
+            if(vetor[i]>vetor[j])
+            {
+                aux = vetor[i];
+                vetor[i] = vetor[j];
+                vetor[j] = aux;
+            }
         }
     }
 }
 
-void chamar_na_fila(fila *f)
+int decepcionados(int *vetor, int tam)
 {
-    registro *aux;
-    int x;
+    int i=0, j=0, aux=0, soma=0;
 
-    if(f->pri != NULL){
-        aux = f->pri;
-        x = aux->valor;
-        f->pri = aux->prox;
-        free(aux);
-        f->qtd--;
-        printf("\n%d Chamado com Sucesso\n\n",x);
+    for(i=0; i<tam; i++)
+    {
+        soma=0;
+        for(j=0; j<i; j++)
+        {
+            soma += vetor[j];
+        }
+        if(soma<=vetor[i])
+        {
+            aux += 1;
+        }
     }
-    return;
+
+    return aux;
 }
-
-void selection_sort (int * vet, int tam){
-int i, j, aux1, aux;
-
-for (i = 0; i < (tam - 1); i++){
-  aux1 = i;
-  for (j = i+1; j < tam; j++) {
-    if (vet[j] < vet[aux1]) {
-  aux1 = j;
-    }
-  }
-  if (i != aux1){
-    aux = vet[i];
-    vet[i] = vet[aux1];
-    vet[aux1] = aux;
-  }
-}}

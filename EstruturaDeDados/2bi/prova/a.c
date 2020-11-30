@@ -1,8 +1,4 @@
-#include <stdio.h> 
-#include <stdlib.h>
-
-int main(int argc, char const *argv[])
-{
-   
-   return 0;
-}
+/*
+A. HIERARQUIA DE PASTAS
+-------------------------------------Gabriel Salmai - 1922130017---------------------------------------------------
+*/
